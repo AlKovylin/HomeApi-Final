@@ -35,7 +35,7 @@ namespace HomeApi
             services.AddSingleton<IDeviceRepository, DeviceRepository>();
             services.AddSingleton<IRoomRepository, RoomRepository>();
             
-            string connection = Configuration. GetConnectionString("DefaultConnection");
+            string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<HomeApiContext>(options => options.UseSqlServer(connection), ServiceLifetime.Singleton);
             
             // Подключаем валидацию
@@ -43,7 +43,7 @@ namespace HomeApi
             
             // Добавляем новый сервис
             services.Configure<HomeOptions>(Configuration);
-            
+
             // Загружаем только адресс (вложенный Json-объект))
             services.Configure<Address>(Configuration.GetSection("Address"));
             

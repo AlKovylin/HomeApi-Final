@@ -97,5 +97,25 @@ namespace HomeApi.Controllers
 
             return StatusCode(200, $"Устройство обновлено! Имя - {device.Name}, Серийный номер - {device.SerialNumber},  Комната подключения - {device.Room.Name}");
         }
+
+        /// <summary>
+        /// Удаление существующего устройства
+        /// </summary>
+        [HttpDelete]
+        [Route("")]
+        public async Task<IActionResult> Delete(DeleteDeviceRequest request)
+        {
+            var room = await _rooms.GetRoomByName(request.Room);
+            if (room == null)
+                return StatusCode(400, $"Ошибка: Комната {request.Room} не подключена. Сначала подключите комнату!");
+
+            var device = await _devices.GetDeviceByName(request.Name);
+            if (device == null)
+                return StatusCode(400, $"Ошибка: Устройство с именем {request.Name} не существует.");
+
+            await _devices.DeleteDevice(device);
+
+            return StatusCode(200, $"Устройство удалено! Имя - {device.Name}, Серийный номер - {device.SerialNumber},  Комната подключения - {device.Room.Name}");
+        }
     }
 }
