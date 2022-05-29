@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using HomeApi.Contracts.Models.Devices.Rooms;
 using HomeApi.Contracts.Models.Rooms;
 using HomeApi.Data.Models;
 using HomeApi.Data.Repos;
@@ -59,6 +60,22 @@ namespace HomeApi.Controllers
             }
             
             return StatusCode(409, $"Ошибка: Комната {request.Name} уже существует.");
-        }        
+        }
+
+        /// <summary>
+        /// Обновление существующей комнаты
+        /// </summary>
+        [HttpPut]
+        [Route("{name}")]
+        public async Task<IActionResult> Edit(
+            [FromRoute] string name,
+            [FromBody] EditRoomRequest request)
+        {
+            var room = await _repository.GetRoomByName(name);
+            if (room == null)
+                return StatusCode(400, $"Ошибка: Комната {name} не подключена. Сначала подключите комнату!");
+
+            var newRoom = _mapper.Map<EditRoomRequest, Room>(request);
+        }
     }
 }

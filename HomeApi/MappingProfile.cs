@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HomeApi.Configuration;
 using HomeApi.Contracts.Models.Devices;
+using HomeApi.Contracts.Models.Devices.Rooms;
 using HomeApi.Contracts.Models.Home;
 using HomeApi.Contracts.Models.Rooms;
 using HomeApi.Data.Models;
@@ -29,6 +30,7 @@ namespace HomeApi
             CreateMap<AddRoomRequest, Room>();
             CreateMap<Device, DeviceView>();
             CreateMap<Room, RoomView>();
+            CreateMap<EditRoomRequest, Room>();
         }
     }
 }
