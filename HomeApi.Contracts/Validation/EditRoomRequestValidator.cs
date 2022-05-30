@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using FluentValidation;
+﻿using FluentValidation;
 using HomeApi.Contracts.Models.Devices.Rooms;
 
 namespace HomeApi.Contracts.Validation

@@ -3,6 +3,7 @@ using AutoMapper;
 using HomeApi.Contracts.Models.Devices.Rooms;
 using HomeApi.Contracts.Models.Rooms;
 using HomeApi.Data.Models;
+using HomeApi.Data.Queries;
 using HomeApi.Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -75,7 +76,12 @@ namespace HomeApi.Controllers
             if (room == null)
                 return StatusCode(400, $"Ошибка: Комната {name} не подключена. Сначала подключите комнату!");
 
-            var newRoom = _mapper.Map<EditRoomRequest, Room>(request);
+            await _repository.UpdateRoom(
+                room,
+                new UpdateRoomQuery(request.NewName, request.NewArea, request.NewGasConnected, request.NewVoltage)
+                );
+
+            return StatusCode(200, $"Комната обновлена! ID - {room.Id}, Имя - {request.NewName}");
         }
     }
 }

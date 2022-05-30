@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using HomeApi.Data.Models;
+using HomeApi.Data.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeApi.Data.Repos
@@ -11,7 +12,7 @@ namespace HomeApi.Data.Repos
     public class RoomRepository : IRoomRepository
     {
         private readonly HomeApiContext _context;
-        
+
         public RoomRepository (HomeApiContext context)
         {
             _context = context;
@@ -44,6 +45,30 @@ namespace HomeApi.Data.Repos
                 await _context.Rooms.AddAsync(room);
             
             await _context.SaveChangesAsync();
-        }        
+        }
+
+        /// <summary>
+        /// Обновить подключенную комнату
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public async Task UpdateRoom(Room room, UpdateRoomQuery query)
+        {
+            // Запрос PUT предполагает заполнение всех полей - проверять их на null не будем.
+             
+            room.Name = query.NewName;
+            room.Area = query.NewArea;
+            room.GasConnected = query.NewGasConnected;
+            room.Voltage = query.NewVoltage;
+
+            // Добавляем в базу 
+           var entry = _context.Entry(room);
+            if (entry.State == EntityState.Detached)
+                _context.Rooms.Update(room);
+
+            // Сохраняем изменения в базе 
+            await _context.SaveChangesAsync();
+        }
     }
 }

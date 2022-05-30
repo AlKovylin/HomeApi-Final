@@ -1,13 +1,13 @@
 ﻿namespace HomeApi.Contracts.Models.Devices.Rooms
 {
     /// <summary>
-    /// Запрос для обновления свойств подключенного устройства
+    /// Запрос для обновления свойств подключенной комнаты
     /// </summary>
     public class EditRoomRequest
     {
         public string NewName { get; set; }
-        public string NewArea { get; set; }
-        public string NewGasConnected { get; set; }
-        public string NewVoltage { get; set; }
+        public int NewArea { get; set; }
+        public bool NewGasConnected { get; set; }
+        public int NewVoltage { get; set; }
     }
 }
