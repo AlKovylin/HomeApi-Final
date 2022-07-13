@@ -1,2 +1,3 @@
 Учебный проект.
-Выполнен на базе 
+Выполнен на базе Web-API ASP.NET Core.
+EntityFramework, AutoMapper.
